@@ -14,6 +14,7 @@ import com.readcsvfile.devapp.model.CityRoutes;
 
 public class CityRoutesUtils {
 
+    final static Logger logger = LogManager.getLogger(CityRoutesUtils.class.getName());
 	private static Map<String, List<CityRoutes>> cityRoutesMap = new HashMap<>();
 	
 	public static Map<String, List<CityRoutes>> getCityRoutes() {
@@ -29,16 +30,12 @@ public class CityRoutesUtils {
 		URL url = classLoader.getResource("Routes.csv");
 
 		try (BufferedReader in = new BufferedReader(new FileReader(url.getPath()))) {
-			List<CityRoutes> list = in.lines().skip(1).map(line -> {
+			in.lines().skip(1).map(line -> {
 				String[] x = pattern.split(line);
 				return new CityRoutes(x[0], x[1], x[2], Integer.parseInt(x[3]), Integer.parseInt(x[4]));
-			}).collect(Collectors.toList());
-			Map<String, List<CityRoutes>> cityRoutesMap = new HashMap<>();
-			list.forEach(c -> {
+			}).forEach(c -> {
 				if(cityRoutesMap.containsKey(c.getCity1())) {
-					List<CityRoutes> cityR = cityRoutesMap.get(c.getCity1());
-					cityR.add(c);
-					cityRoutesMap.put(c.getCity1(), cityR);
+					cityRoutesMap.get(c.getCity1()).add(c);
 				} else {
 					List<CityRoutes> cityR = new ArrayList<>();
 					cityR.add(c);
@@ -47,8 +44,8 @@ public class CityRoutesUtils {
 			});
 			return cityRoutesMap;
 		} catch (IOException e) {
-
-			throw new RuntimeException();
+            logger.error(e);
+		    return Collections.emptyMap();
 		}
 
 	}
