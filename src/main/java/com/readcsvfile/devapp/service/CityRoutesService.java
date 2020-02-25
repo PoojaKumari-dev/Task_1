@@ -19,15 +19,7 @@ public class CityRoutesService {
 	
 	public List<CityRoutes> readCsvDataCity(String city1) throws JsonGenerationException, JsonMappingException, IOException
 	{
-		List<CityRoutes> CityRoutes = CityRoutesUtils.getCityRoutes();
-		List<CityRoutes> listCityRoutes = CityRoutes.stream()               
-                .filter(list->list.getCity1().equalsIgnoreCase(city1))     
-                .collect(Collectors.toList());   
-		listCityRoutes.removeAll(Collections.singletonList(null));
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		mapper.writeValue(System.out, listCityRoutes);
-		return listCityRoutes;
+		return CityRoutesUtils.getCityRoutes().get(city1);
 	}
 
 }

@@ -14,16 +14,16 @@ import com.readcsvfile.devapp.model.CityRoutes;
 
 public class CityRoutesUtils {
 
-	private static List<CityRoutes> cityList= new ArrayList<>();
+	private static Map<String, List<CityRoutes>> cityRoutesMap = new HashMap<>();
 	
-	public static List getCityRoutes() {
-		if(cityList.isEmpty()) {
-			cityList= readCityRoutes();
+	public static Map<String, List<CityRoutes>> getCityRoutes() {
+		if(cityRoutesMap.isEmpty()) {
+			cityRoutesMap= readCityRoutes();
 		}
-		return cityList;
+		return cityRoutesMap;
 	}
 	
-	public static List<CityRoutes> readCityRoutes() {
+	public static Map<String, List<CityRoutes>> readCityRoutes() {
 		Pattern pattern = Pattern.compile(",");
 		ClassLoader classLoader = CSVController.class.getClassLoader();
 		URL url = classLoader.getResource("Routes.csv");
@@ -33,7 +33,19 @@ public class CityRoutesUtils {
 				String[] x = pattern.split(line);
 				return new CityRoutes(x[0], x[1], x[2], Integer.parseInt(x[3]), Integer.parseInt(x[4]));
 			}).collect(Collectors.toList());
-			return list;
+			Map<String, List<CityRoutes>> cityRoutesMap = new HashMap<>();
+			list.forEach(c -> {
+				if(cityRoutesMap.containsKey(c.getCity1())) {
+					List<CityRoutes> cityR = cityRoutesMap.get(c.getCity1());
+					cityR.add(c);
+					cityRoutesMap.put(c.getCity1(), cityR);
+				} else {
+					List<CityRoutes> cityR = new ArrayList<>();
+					cityR.add(c);
+					cityRoutesMap.put(c.getCity1(), cityR);
+				}
+			});
+			return cityRoutesMap;
 		} catch (IOException e) {
 
 			throw new RuntimeException();
