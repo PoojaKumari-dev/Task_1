@@ -17,17 +17,17 @@ public class CityRoutesUtils {
     final static Logger logger = LogManager.getLogger(CityRoutesUtils.class.getName());
 	private static Map<String, List<CityRoutes>> cityRoutesMap = new HashMap<>();
 	
-	public static Map<String, List<CityRoutes>> getCityRoutes() {
+	public static Map<String, List<CityRoutes>> getCityRoutes(String fileName) {
 		if(cityRoutesMap.isEmpty()) {
-			cityRoutesMap= readCityRoutes();
+			cityRoutesMap= readCityRoutes(fileName);
 		}
 		return cityRoutesMap;
 	}
 	
-	public static Map<String, List<CityRoutes>> readCityRoutes() {
+	public static Map<String, List<CityRoutes>> readCityRoutes(String fileName) {
 		Pattern pattern = Pattern.compile(",");
 		ClassLoader classLoader = CSVController.class.getClassLoader();
-		URL url = classLoader.getResource("Routes.csv");
+		URL url = classLoader.getResource(fileName);
 
 		try (BufferedReader in = new BufferedReader(new FileReader(url.getPath()))) {
 			in.lines().skip(1).map(line -> {

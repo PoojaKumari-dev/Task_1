@@ -16,10 +16,12 @@ import com.readcsvfile.devapp.utils.CityRoutesUtils;
 
 @Service
 public class CityRoutesService {
-	
+	@Value("${file.location1:test}")
+	private String fileName;
 	public List<CityRoutes> readCsvDataCity(String city1) throws JsonGenerationException, JsonMappingException, IOException
 	{
-		return CityRoutesUtils.getCityRoutes().get(city1);
+		//String fileName = "Routes.csv";
+		return CityRoutesUtils.getCityRoutes(fileName).get(city1);
 	}
 
 }

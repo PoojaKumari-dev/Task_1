@@ -24,10 +24,19 @@ public class CSVController {
 	CityRoutesService cityRoutesService;
 
 	@GetMapping("/{city1}")
-	public ResponseEntity<List<CityRoutes>> readCsvCityRoutes(@PathVariable String city1)
-			throws JsonGenerationException, JsonMappingException, IOException {
-		
-		return new ResponseEntity<>( cityRoutesService.readCsvDataCity(city1),HttpStatus.OK);
+	public ResponseEntity<List<CityRoutes>> readCsvCityRoutes(@PathVariable String city1) {
+		try {
+			return new ResponseEntity<>(cityRoutesService.readCsvDataCity(city1), HttpStatus.OK);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 }
