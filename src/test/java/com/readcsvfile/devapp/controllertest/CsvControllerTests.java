@@ -1,5 +1,4 @@
-package com.readcsvfile.devapp.controllertest;
-
+package com.readcsvfile.devapp.controllerTests;
 
 import com.readcsvfile.devapp.controller.CSVController;
 import com.readcsvfile.devapp.model.CityRoutes;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CSVController.class)
-public class CsvControllerTest {
+public class CsvControllerTests {
 
     @Autowired
     private MockMvc mvc;
@@ -54,8 +53,6 @@ public class CsvControllerTest {
         List<CityRoutes> result = mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<CityRoutes>>() {
         });
         assertThat(result.size()).isEqualTo(1);
-
     }
-
 
 }

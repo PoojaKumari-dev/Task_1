@@ -1,10 +1,10 @@
-package com.readcsvfile.devapp.servicetest;
+package com.readcsvfile.devapp.serviceTests;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.readcsvfile.devapp.model.CityRoutes;
 import com.readcsvfile.devapp.service.CityRoutesService;
 import com.readcsvfile.devapp.utils.CityRoutesUtils;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,17 +14,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CsvServiceTest {
+public class CsvServiceTests {
 
     @InjectMocks
     private CityRoutesService cityRoutesService;
@@ -37,7 +35,6 @@ public class CsvServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @SuppressWarnings({ "static-access", "unchecked" })
     @Test
     public void testCityRoutesService() throws JsonGenerationException, JsonMappingException, IOException {
         //ReflectionTestUtils.setField(cityRoutesService, "fileName",fileName);
