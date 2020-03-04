@@ -48,7 +48,7 @@ public class CsvUtilsTests {
         assertNotNull(result);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IOException.class)
     public void testExceptionGetCityRoutesUtils() {
         doThrow(IOException.class).when(exception).expectMessage((String) any());
         Map<String, List<CityRoutes>> result = cityRoutesUtils.readCityRoutes(ArgumentMatchers.anyString());
